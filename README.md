@@ -4,7 +4,7 @@ Two separate applications are being built for the selected assessment problems: 
 
 ## Status
 
-The local embedding model and FAISS index are available for Problem 1. A language model is not currently configured. The apps fail closed for answer generation/extraction when the configured LLM is missing or unavailable; no mocked output is presented as a real model result. See `docs/status_and_gaps.md` for the evidence audit.
+The local embedding model and FAISS index are available for Problem 1. The apps fail closed for answer generation/extraction when no LLM is configured; no mocked output is presented as a real model result. On 22 Nov 2026 both model-backed evaluations were run with `gemini-3.5-flash-lite` (free Google AI Studio key, OpenAI-compatible endpoint): extraction completed all 10 synthetic invoices (schema validity 1.0, field exact-match 0.9571) and the RAG answer stage answered all 15 labeled queries (12/12 answerable with valid citations, 2/3 expected abstentions, one recorded abstention-flag miss). See `docs/status_and_gaps.md` for the evidence audit.
 
 ## Setup (Windows PowerShell)
 
@@ -56,4 +56,3 @@ Start Problem 5 and upload `samples/extraction/invoice_01.pdf` to `/extract`. It
 ## Privacy and limitations
 
 All source data stays local unless a user configures an external LLM endpoint. The local embedding model is used only for Problem 1 and receives document/query text on the local machine. Scan-only PDFs are detected but OCR is not implemented. RAG persistence is local. API keys are read from environment variables and never logged. These are learning projects, not production services.
-
