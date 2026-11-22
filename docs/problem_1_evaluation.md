@@ -18,14 +18,14 @@ The script runs MiniLM/FAISS and BM25 on the same queries and same chunks. The l
 
 `python -m evaluation.rag.run` writes complete per-query semantic and BM25 rankings and scores to `evaluation/rag/raw_results.json`. On the current run, MiniLM/FAISS and BM25 produce the same source-level metrics: source hit rate@5 0.8000 over all queries, answerable-query hit rate@5 1.0000 over 12 answerable queries, expected-source coverage@5 0.8000, and chunk precision@5 0.2267 under the stated denominator. The similarity gate triggers on 2/3 expected-abstention queries (0.6667); this is not an answerability classifier. Neither retriever demonstrates a source-level advantage. See raw results for query-specific ranks and scores.
 
-**Answer generation, citation-support review, follow-up quality, and model abstention are BLOCKED** because no LLM is configured. Unit tests use fake clients only to verify citation allowlisting and response contracts; they are not model-quality evidence. The 0.30 relevance threshold is provisional; the permit-fee query is a known difficult negative because it is topically close to policy excerpts. This confirms why retrieval score alone cannot certify factual support.
+**Answer generation, citation support and abstention were measured on 22 Nov 2026** with gemini-3.5-flash-lite (free Google AI Studio key, temperature 0): all 15 labeled queries were answered by the real model; 12/12 answerable queries returned answers whose citations all came from the retrieved allowlist; 2/3 expected-abstention queries abstained correctly; one calibration miss (R15: the answer text reported the information absent but the abstain flag was not set) is recorded per query in `evaluation/rag/answer_support_review.json`. Unit tests use fake clients only to verify citation allowlisting and response contracts; they are not model-quality evidence. The 0.30 relevance threshold is provisional; the permit-fee query is a known difficult negative because it is topically close to policy excerpts. This confirms why retrieval score alone cannot certify factual support.
 
 ## Failure cases exercised
 
 1. Unsupported file type, invalid UTF-8 text, malformed PDF signature, blank/scan-style PDF without extractable text.
 2. Exact duplicate document upload and persistent index reload.
 3. Fabricated citation ID rejected by the answer contract.
-4. Unanswerable policy questions and a conflicting revision are included in the labeled query set; model response behavior is not run.
+4. Unanswerable policy questions and a conflicting revision are included in the labeled query set; in the 22 Nov 2026 run the conflicting-revision query (R13) surfaced the conflicting documents, and two of three expected-abstention queries abstained (the third miss is recorded in `answer_support_review.json`).
 
 ## Improvements
 
