@@ -28,4 +28,4 @@
 
 **Choice:** Use one small OpenAI-compatible HTTP client, requiring explicit endpoint and model configuration, with bounded timeout and JSON validation. Secrets are environment-only; logs omit content.
 
-**Alternatives:** provider SDK lock-in or silent fake output. The common endpoint supports local OpenAI-compatible runners and authorized APIs. There is no configured language model at the time of implementation, so real extraction accuracy and model-backed demonstrations remain blocked.
+**Alternatives:** provider SDK lock-in or silent fake output. The common endpoint supports local OpenAI-compatible runners and authorized APIs. There was no configured language model at the time of implementation. Update 22 Nov 2026: gemini-3.5-flash-lite was later configured and real extraction accuracy was measured; see `docs/problem_5_evaluation.md` and `evaluation/extraction/raw_results.json`.
