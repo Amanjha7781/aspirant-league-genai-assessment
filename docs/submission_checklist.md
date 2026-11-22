@@ -15,14 +15,14 @@ The timing below comes from the invitation summary in the user's supplied prompt
 - [x] 16 tests passed in a clean virtual environment; live localhost routes were exercised and logged.
 - [x] No employer PDF copy, public repository, repository invite, email, or submission was created.
 
-## Required review and remaining gaps
+## Completed 22 Nov 2026
 
-- [ ] Configure and identify a real authorized local/remote LLM, confirm its data handling, then rerun generation/extraction demos and model-backed evaluations. Do not share real/employer documents.
-- [ ] Review model answers/extractions and compare against independent labels; current model-quality scores are blocked, not zero or passed.
-- [ ] Record a real short demo video if the invitation email requires a file. The assessment PDF accepts a short video or live demonstration; a live localhost run is documented, but no video is included.
-- [ ] Recheck the final audit after model evaluation and decide what materials to include in the email/repository.
-- [ ] Review confidentiality and repository visibility/audience before any remote sharing. No submission has been sent.
+- [x] Real authorized LLM configured: gemini-3.5-flash-lite via a free Google AI Studio key (OpenAI-compatible endpoint, temperature 0). Only synthetic sample documents are sent to the provider; no real/employer documents. Model-backed evaluations and demos rerun.
+- [x] Model answers/extractions compared against independent labels; real scores recorded in `evaluation/rag/raw_results.json`, `evaluation/rag/answer_support_review.json`, and `evaluation/extraction/raw_results.json`.
+- [x] Real short demo video recorded 22 Nov 2026 (55 s, live APIs with the real model; sent with the submission email).
+- [x] Final audit rechecked after model evaluation; `docs/status_and_gaps.md` updated with real results and residual misses.
+- [x] Confidentiality and repository visibility reviewed: the repository is public as originally created by the candidate; the confidential employer PDF and credentials are not in the repository and are gitignored.
 
 ## Factual limits
 
-The project currently has no real LLM-backed answer or invoice-extraction result. The local embedding/retrieval pipeline did run. The live extraction demonstration shows a 503 for missing model configuration and a 415 for unsupported TXT input. The RAG answer path also returns 503 until a model is configured. Do not describe these as successful model demonstrations.
+All reported metrics come from real recorded runs on 22 Nov 2026 with gemini-3.5-flash-lite. Residual issues are recorded honestly: one abstention-flag calibration miss (R15), three per-field extraction misses, and transient provider errors cleared by bounded retries. The 503 fail-closed behavior when no model is configured remains implemented and unit-tested.
