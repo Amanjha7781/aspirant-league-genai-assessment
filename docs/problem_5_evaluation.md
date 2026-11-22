@@ -14,6 +14,6 @@ These extraction metrics are distinct from schema validity. A well-formed value 
 
 ## Actual results and limitations
 
-`python -m evaluation.extraction.run` writes `evaluation/extraction/raw_results.json`. Current status is **BLOCKED** because no LLM endpoint is configured; it reports 10 expected documents and the 70-field denominator but no accuracy score. No mocked extraction or hand-written answer is presented as model performance.
+`python -m evaluation.extraction.run` writes `evaluation/extraction/raw_results.json`. Status on 22 Nov 2026: **COMPLETE** with gemini-3.5-flash-lite (free Google AI Studio key, temperature 0) over all 10 synthetic invoices - schema validity 1.0, field exact-match accuracy 0.9571 (67/70), expected present-value accuracy 0.9848 (65/66). Three residual per-field misses and 5 bounded retries of transient provider errors are recorded per document in the raw results. No mocked extraction or hand-written answer is presented as model performance.
 
 Unit tests cover valid text PDFs, unsupported content, malformed PDFs, scan/OCR-required detection, missing/ambiguous status preservation, evidence mismatch, arithmetic mismatch, OpenAPI schema availability, size enforcement, and fail-closed model access. OCR is not implemented. Invoice arithmetic assumes subtotal + tax = total; discounts, freight, withholding, tax-inclusive amounts, multiple rates, and currency-specific rounding need explicit future rules.
