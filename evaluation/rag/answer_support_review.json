@@ -1,0 +1,174 @@
+{
+  "reviewer": "agent review of recorded model outputs (model: gemini-3.5-flash-lite, run 2026-11-22 IST)",
+  "method": "each answer read against the retrieved source chunks; citation IDs are allowlist-enforced by the app; support judged on factual grounding in the cited synthetic sources",
+  "counts": {
+    "supported": 12,
+    "correct_abstention": 2,
+    "contract_miss": 1
+  },
+  "rows": [
+    {
+      "id": "R01",
+      "query": "What hours may visitors use visitor parking?",
+      "verdict": "supported",
+      "note": "",
+      "answer": "Visitors may park in spaces marked VISITOR from 8:00 a.m. to 6:00 p.m., according to the parking policy. Additionally, an internal draft notes that visitors may use marked VISITOR spaces until 7:00 p.m. with a dashboard permit, though it does not state whether it replaces the posted policy.",
+      "citations": [
+        "457676036ffc08ec0ed9",
+        "de9370d95aa0b5fab6bf"
+      ],
+      "retried_after_error": false
+    },
+    {
+      "id": "R02",
+      "query": "What does a visitor need to display?",
+      "verdict": "supported",
+      "note": "",
+      "answer": "According to the internal draft, visitors need to display a dashboard permit.",
+      "citations": [
+        "457676036ffc08ec0ed9"
+      ],
+      "retried_after_error": false
+    },
+    {
+      "id": "R03",
+      "query": "Where is the EV charging located?",
+      "verdict": "supported",
+      "note": "",
+      "answer": "The electric vehicle charging spaces are located beside the east garage entrance.",
+      "citations": [
+        "de9370d95aa0b5fab6bf"
+      ],
+      "retried_after_error": false
+    },
+    {
+      "id": "R04",
+      "query": "How long may a vehicle charge?",
+      "verdict": "supported",
+      "note": "",
+      "answer": "Charging is limited to four hours.",
+      "citations": [
+        "de9370d95aa0b5fab6bf"
+      ],
+      "retried_after_error": true
+    },
+    {
+      "id": "R05",
+      "query": "Who checks the charging equipment and when?",
+      "verdict": "supported",
+      "note": "",
+      "answer": "The facility team checks the charging equipment each Monday.",
+      "citations": [
+        "de9370d95aa0b5fab6bf"
+      ],
+      "retried_after_error": false
+    },
+    {
+      "id": "R06",
+      "query": "When is the front desk open?",
+      "verdict": "supported",
+      "note": "",
+      "answer": "The front desk is staffed Monday through Friday from 8:00 a.m. to 6:00 p.m., and is closed on weekends and public holidays.",
+      "citations": [
+        "88bf671ef906e986ea60"
+      ],
+      "retried_after_error": false
+    },
+    {
+      "id": "R07",
+      "query": "Is the desk open Sunday?",
+      "verdict": "supported",
+      "note": "",
+      "answer": "No, the front desk is closed on weekends, which includes Sunday.",
+      "citations": [
+        "88bf671ef906e986ea60"
+      ],
+      "retried_after_error": false
+    },
+    {
+      "id": "R08",
+      "query": "When is visitor access to the east garage closed?",
+      "verdict": "supported",
+      "note": "",
+      "answer": "Visitor access to the east garage ends at 6:00 p.m.",
+      "citations": [
+        "88bf671ef906e986ea60"
+      ],
+      "retried_after_error": false
+    },
+    {
+      "id": "R09",
+      "query": "Can residents park overnight?",
+      "verdict": "supported",
+      "note": "",
+      "answer": "Yes, residents may park overnight in the east garage using a valid resident pass.",
+      "citations": [
+        "de9370d95aa0b5fab6bf"
+      ],
+      "retried_after_error": true
+    },
+    {
+      "id": "R10",
+      "query": "What color is the garage door?",
+      "verdict": "correct_abstention",
+      "note": "",
+      "answer": "I could not find supporting evidence in the uploaded documents.",
+      "citations": [],
+      "retried_after_error": false
+    },
+    {
+      "id": "R11",
+      "query": "What is the visitor permit fee?",
+      "verdict": "correct_abstention",
+      "note": "",
+      "answer": "The provided evidence does not contain information about the visitor permit fee.",
+      "citations": [],
+      "retried_after_error": false
+    },
+    {
+      "id": "R12",
+      "query": "Does visitor parking require a permit?",
+      "verdict": "supported",
+      "note": "",
+      "answer": "Yes, a dashboard permit is required for visitor parking.",
+      "citations": [
+        "de9370d95aa0b5fab6bf"
+      ],
+      "retried_after_error": false
+    },
+    {
+      "id": "R13",
+      "query": "What time can visitors park until?",
+      "verdict": "supported",
+      "note": "surfaces the park_policy vs internal-draft conflict without merging facts",
+      "answer": "Visitors may park in spaces marked VISITOR until 6:00 p.m. according to the park policy, though an internal draft mentions until 7:00 p.m.",
+      "citations": [
+        "457676036ffc08ec0ed9",
+        "de9370d95aa0b5fab6bf"
+      ],
+      "retried_after_error": false
+    },
+    {
+      "id": "R14",
+      "query": "What internal extension should be called for a power outage?",
+      "verdict": "supported",
+      "note": "",
+      "answer": "For a power outage during staffed hours, you should call internal extension 400 to report it to the facilities desk.",
+      "citations": [
+        "571b29490d27bfdfc4f9"
+      ],
+      "retried_after_error": false
+    },
+    {
+      "id": "R15",
+      "query": "What is the after-hours emergency contact number?",
+      "verdict": "contract_miss",
+      "note": "answer text correctly states the number is not provided, but abstained flag was not set and a chunk was cited; calibration issue, not a fabricated fact",
+      "answer": "The provided evidence does not contain an after-hours emergency contact number and explicitly states that the sample does not provide one.",
+      "citations": [
+        "571b29490d27bfdfc4f9"
+      ],
+      "retried_after_error": true
+    }
+  ]
+}
