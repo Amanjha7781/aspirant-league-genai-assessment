@@ -21,9 +21,250 @@
     "chunk_precision_at_5": 0.2267
   },
   "similarity_gate_rate_on_expected_abstentions": 0.6667,
-  "answer_support_review": "BLOCKED - no LLM endpoint configured; this script measured retrieval only",
-  "unavailable_answer_behavior": "NOT RUN - requires a real configured LLM; retrieval results for abstention-labeled queries are preserved below",
-  "llm_configured": false,
+  "answer_support_review": "RUN - model answers recorded in answer_stage.rows; per-query support judgments are reviewed separately and stored in evaluation/rag/answer_support_review.json",
+  "unavailable_answer_behavior": "measured in answer_stage (abstention_rate_on_expected_abstentions)",
+  "answer_stage": {
+    "queries": 15,
+    "behavior_counts": {
+      "answered": 13,
+      "abstained": 2,
+      "errors": 0,
+      "expected_abstention_abstained": 2,
+      "expected_abstention_total": 3,
+      "answerable_answered": 12,
+      "answerable_total": 12
+    },
+    "abstention_rate_on_expected_abstentions": 0.6667,
+    "answered_with_citation_rate_on_answerable": 1.0,
+    "rows": [
+      {
+        "id": "R01",
+        "query": "What hours may visitors use visitor parking?",
+        "expected_abstention": false,
+        "expected_sources": [
+          "park_policy.txt",
+          "park_policy_revision.txt"
+        ],
+        "relevant_chunks": 3,
+        "answer": "Visitors may park in spaces marked VISITOR from 8:00 a.m. to 6:00 p.m., according to the parking policy. Additionally, an internal draft notes that visitors may use marked VISITOR spaces until 7:00 p.m. with a dashboard permit, though it does not state whether it replaces the posted policy.",
+        "abstained": false,
+        "citations": [
+          "457676036ffc08ec0ed9",
+          "de9370d95aa0b5fab6bf"
+        ],
+        "reason": null
+      },
+      {
+        "id": "R02",
+        "query": "What does a visitor need to display?",
+        "expected_abstention": false,
+        "expected_sources": [
+          "park_policy.txt",
+          "park_policy_revision.txt"
+        ],
+        "relevant_chunks": 1,
+        "answer": "According to the internal draft, visitors need to display a dashboard permit.",
+        "abstained": false,
+        "citations": [
+          "457676036ffc08ec0ed9"
+        ],
+        "reason": null
+      },
+      {
+        "id": "R03",
+        "query": "Where is the EV charging located?",
+        "expected_abstention": false,
+        "expected_sources": [
+          "park_policy.txt"
+        ],
+        "relevant_chunks": 1,
+        "answer": "The electric vehicle charging spaces are located beside the east garage entrance.",
+        "abstained": false,
+        "citations": [
+          "de9370d95aa0b5fab6bf"
+        ],
+        "reason": null
+      },
+      {
+        "id": "R04",
+        "query": "How long may a vehicle charge?",
+        "expected_abstention": false,
+        "expected_sources": [
+          "park_policy.txt"
+        ],
+        "relevant_chunks": 1,
+        "answer": "Charging is limited to four hours.",
+        "abstained": false,
+        "citations": [
+          "de9370d95aa0b5fab6bf"
+        ],
+        "reason": null,
+        "retried_after_error": true
+      },
+      {
+        "id": "R05",
+        "query": "Who checks the charging equipment and when?",
+        "expected_abstention": false,
+        "expected_sources": [
+          "park_policy.txt"
+        ],
+        "relevant_chunks": 1,
+        "answer": "The facility team checks the charging equipment each Monday.",
+        "abstained": false,
+        "citations": [
+          "de9370d95aa0b5fab6bf"
+        ],
+        "reason": null
+      },
+      {
+        "id": "R06",
+        "query": "When is the front desk open?",
+        "expected_abstention": false,
+        "expected_sources": [
+          "facility_hours.txt"
+        ],
+        "relevant_chunks": 1,
+        "answer": "The front desk is staffed Monday through Friday from 8:00 a.m. to 6:00 p.m., and is closed on weekends and public holidays.",
+        "abstained": false,
+        "citations": [
+          "88bf671ef906e986ea60"
+        ],
+        "reason": null
+      },
+      {
+        "id": "R07",
+        "query": "Is the desk open Sunday?",
+        "expected_abstention": false,
+        "expected_sources": [
+          "facility_hours.txt"
+        ],
+        "relevant_chunks": 2,
+        "answer": "No, the front desk is closed on weekends, which includes Sunday.",
+        "abstained": false,
+        "citations": [
+          "88bf671ef906e986ea60"
+        ],
+        "reason": null
+      },
+      {
+        "id": "R08",
+        "query": "When is visitor access to the east garage closed?",
+        "expected_abstention": false,
+        "expected_sources": [
+          "facility_hours.txt"
+        ],
+        "relevant_chunks": 3,
+        "answer": "Visitor access to the east garage ends at 6:00 p.m.",
+        "abstained": false,
+        "citations": [
+          "88bf671ef906e986ea60"
+        ],
+        "reason": null
+      },
+      {
+        "id": "R09",
+        "query": "Can residents park overnight?",
+        "expected_abstention": false,
+        "expected_sources": [
+          "park_policy.txt",
+          "facility_hours.txt"
+        ],
+        "relevant_chunks": 3,
+        "answer": "Yes, residents may park overnight in the east garage using a valid resident pass.",
+        "abstained": false,
+        "citations": [
+          "de9370d95aa0b5fab6bf"
+        ],
+        "reason": null,
+        "retried_after_error": true
+      },
+      {
+        "id": "R10",
+        "query": "What color is the garage door?",
+        "expected_abstention": true,
+        "expected_sources": [],
+        "relevant_chunks": 0,
+        "answer": "I could not find supporting evidence in the uploaded documents.",
+        "abstained": true,
+        "citations": [],
+        "reason": "below similarity threshold"
+      },
+      {
+        "id": "R11",
+        "query": "What is the visitor permit fee?",
+        "expected_abstention": true,
+        "expected_sources": [],
+        "relevant_chunks": 2,
+        "answer": "The provided evidence does not contain information about the visitor permit fee.",
+        "abstained": true,
+        "citations": [],
+        "reason": null
+      },
+      {
+        "id": "R12",
+        "query": "Does visitor parking require a permit?",
+        "expected_abstention": false,
+        "expected_sources": [
+          "park_policy.txt",
+          "park_policy_revision.txt"
+        ],
+        "relevant_chunks": 2,
+        "answer": "Yes, a dashboard permit is required for visitor parking.",
+        "abstained": false,
+        "citations": [
+          "de9370d95aa0b5fab6bf"
+        ],
+        "reason": null
+      },
+      {
+        "id": "R13",
+        "query": "What time can visitors park until?",
+        "expected_abstention": false,
+        "expected_sources": [
+          "park_policy.txt",
+          "park_policy_revision.txt"
+        ],
+        "relevant_chunks": 3,
+        "answer": "Visitors may park in spaces marked VISITOR until 6:00 p.m. according to the park policy, though an internal draft mentions until 7:00 p.m.",
+        "abstained": false,
+        "citations": [
+          "457676036ffc08ec0ed9",
+          "de9370d95aa0b5fab6bf"
+        ],
+        "reason": null
+      },
+      {
+        "id": "R14",
+        "query": "What internal extension should be called for a power outage?",
+        "expected_abstention": false,
+        "expected_sources": [
+          "emergency_procedure.pdf"
+        ],
+        "relevant_chunks": 1,
+        "answer": "For a power outage during staffed hours, you should call internal extension 400 to report it to the facilities desk.",
+        "abstained": false,
+        "citations": [
+          "571b29490d27bfdfc4f9"
+        ],
+        "reason": null
+      },
+      {
+        "id": "R15",
+        "query": "What is the after-hours emergency contact number?",
+        "expected_abstention": true,
+        "expected_sources": [],
+        "relevant_chunks": 2,
+        "answer": "The provided evidence does not contain an after-hours emergency contact number and explicitly states that the sample does not provide one.",
+        "abstained": false,
+        "citations": [
+          "571b29490d27bfdfc4f9"
+        ],
+        "reason": null,
+        "retried_after_error": true
+      }
+    ]
+  },
+  "llm_configured": true,
   "results": [
     {
       "id": "R01",
@@ -41,7 +282,7 @@
           "filename": "park_policy_revision.txt",
           "page": null,
           "text": "PARKING POLICY REVISION (SYNTHETIC SAMPLE)\nVisitor parking An internal draft says visitors may use marked VISITOR spaces until 7:00 p.m. with a dashboard permit. This draft does not state whether it replaces the posted policy.",
-          "score": 0.7758810520172119
+          "score": 0.7758809328079224
         },
         {
           "chunk_id": "de9370d95aa0b5fab6bf",
@@ -49,7 +290,7 @@
           "filename": "park_policy.txt",
           "page": null,
           "text": "PARKING POLICY (SYNTHETIC SAMPLE)\nVisitor parking Visitors may park in spaces marked VISITOR from 8:00 a.m. to 6:00 p.m. A dashboard permit is required. The permit can be collected from the front desk.\nOvernight parking Overnight parking is not permitted in the visitor lot. Residents may use the east garage overnight with a valid resident pass.\nElectric vehicle charging The two charging spaces are beside the east garage entrance. Charging is limited to four hours. The facility team checks charging equipment each Monday.",
-          "score": 0.7493358254432678
+          "score": 0.7493358850479126
         },
         {
           "chunk_id": "88bf671ef906e986ea60",
@@ -57,7 +298,7 @@
           "filename": "facility_hours.txt",
           "page": null,
           "text": "FACILITY HOURS (SYNTHETIC SAMPLE)\nThe front desk is staffed Monday through Friday from 8:00 a.m. to 6:00 p.m. It is closed on weekends and public holidays.\nThe east garage is accessible to residents at all times with a resident pass. Visitor access to the east garage ends at 6:00 p.m.",
-          "score": 0.4593653976917267
+          "score": 0.459365576505661
         },
         {
           "chunk_id": "571b29490d27bfdfc4f9",
@@ -65,7 +306,7 @@
           "filename": "emergency_procedure.pdf",
           "page": 1,
           "text": "EMERGENCY PROCEDURE (SYNTHETIC SAMPLE) Power outage During staffed hours, report a building power outage to the facilities desk using internal extension 400. The sample does not provide an after-hours emergency contact number.",
-          "score": 0.15242281556129456
+          "score": 0.1524229347705841
         }
       ],
       "bm25_top5": [
@@ -119,7 +360,7 @@
           "filename": "park_policy_revision.txt",
           "page": null,
           "text": "PARKING POLICY REVISION (SYNTHETIC SAMPLE)\nVisitor parking An internal draft says visitors may use marked VISITOR spaces until 7:00 p.m. with a dashboard permit. This draft does not state whether it replaces the posted policy.",
-          "score": 0.36448439955711365
+          "score": 0.3644845485687256
         },
         {
           "chunk_id": "de9370d95aa0b5fab6bf",
@@ -127,7 +368,7 @@
           "filename": "park_policy.txt",
           "page": null,
           "text": "PARKING POLICY (SYNTHETIC SAMPLE)\nVisitor parking Visitors may park in spaces marked VISITOR from 8:00 a.m. to 6:00 p.m. A dashboard permit is required. The permit can be collected from the front desk.\nOvernight parking Overnight parking is not permitted in the visitor lot. Residents may use the east garage overnight with a valid resident pass.\nElectric vehicle charging The two charging spaces are beside the east garage entrance. Charging is limited to four hours. The facility team checks charging equipment each Monday.",
-          "score": 0.27846288681030273
+          "score": 0.2784630060195923
         },
         {
           "chunk_id": "88bf671ef906e986ea60",
@@ -135,7 +376,7 @@
           "filename": "facility_hours.txt",
           "page": null,
           "text": "FACILITY HOURS (SYNTHETIC SAMPLE)\nThe front desk is staffed Monday through Friday from 8:00 a.m. to 6:00 p.m. It is closed on weekends and public holidays.\nThe east garage is accessible to residents at all times with a resident pass. Visitor access to the east garage ends at 6:00 p.m.",
-          "score": 0.11543324589729309
+          "score": 0.11543332785367966
         },
         {
           "chunk_id": "571b29490d27bfdfc4f9",
@@ -143,7 +384,7 @@
           "filename": "emergency_procedure.pdf",
           "page": 1,
           "text": "EMERGENCY PROCEDURE (SYNTHETIC SAMPLE) Power outage During staffed hours, report a building power outage to the facilities desk using internal extension 400. The sample does not provide an after-hours emergency contact number.",
-          "score": 0.07928583770990372
+          "score": 0.07928581535816193
         }
       ],
       "bm25_top5": [
@@ -196,7 +437,7 @@
           "filename": "park_policy.txt",
           "page": null,
           "text": "PARKING POLICY (SYNTHETIC SAMPLE)\nVisitor parking Visitors may park in spaces marked VISITOR from 8:00 a.m. to 6:00 p.m. A dashboard permit is required. The permit can be collected from the front desk.\nOvernight parking Overnight parking is not permitted in the visitor lot. Residents may use the east garage overnight with a valid resident pass.\nElectric vehicle charging The two charging spaces are beside the east garage entrance. Charging is limited to four hours. The facility team checks charging equipment each Monday.",
-          "score": 0.3117793798446655
+          "score": 0.3117794692516327
         },
         {
           "chunk_id": "88bf671ef906e986ea60",
@@ -204,7 +445,7 @@
           "filename": "facility_hours.txt",
           "page": null,
           "text": "FACILITY HOURS (SYNTHETIC SAMPLE)\nThe front desk is staffed Monday through Friday from 8:00 a.m. to 6:00 p.m. It is closed on weekends and public holidays.\nThe east garage is accessible to residents at all times with a resident pass. Visitor access to the east garage ends at 6:00 p.m.",
-          "score": 0.15047074854373932
+          "score": 0.15047071874141693
         },
         {
           "chunk_id": "571b29490d27bfdfc4f9",
@@ -212,7 +453,7 @@
           "filename": "emergency_procedure.pdf",
           "page": 1,
           "text": "EMERGENCY PROCEDURE (SYNTHETIC SAMPLE) Power outage During staffed hours, report a building power outage to the facilities desk using internal extension 400. The sample does not provide an after-hours emergency contact number.",
-          "score": 0.14041943848133087
+          "score": 0.14041949808597565
         },
         {
           "chunk_id": "457676036ffc08ec0ed9",
@@ -220,7 +461,7 @@
           "filename": "park_policy_revision.txt",
           "page": null,
           "text": "PARKING POLICY REVISION (SYNTHETIC SAMPLE)\nVisitor parking An internal draft says visitors may use marked VISITOR spaces until 7:00 p.m. with a dashboard permit. This draft does not state whether it replaces the posted policy.",
-          "score": 0.11201301217079163
+          "score": 0.112013079226017
         }
       ],
       "bm25_top5": [
@@ -273,7 +514,7 @@
           "filename": "park_policy.txt",
           "page": null,
           "text": "PARKING POLICY (SYNTHETIC SAMPLE)\nVisitor parking Visitors may park in spaces marked VISITOR from 8:00 a.m. to 6:00 p.m. A dashboard permit is required. The permit can be collected from the front desk.\nOvernight parking Overnight parking is not permitted in the visitor lot. Residents may use the east garage overnight with a valid resident pass.\nElectric vehicle charging The two charging spaces are beside the east garage entrance. Charging is limited to four hours. The facility team checks charging equipment each Monday.",
-          "score": 0.46536487340927124
+          "score": 0.4653650224208832
         },
         {
           "chunk_id": "457676036ffc08ec0ed9",
@@ -281,7 +522,7 @@
           "filename": "park_policy_revision.txt",
           "page": null,
           "text": "PARKING POLICY REVISION (SYNTHETIC SAMPLE)\nVisitor parking An internal draft says visitors may use marked VISITOR spaces until 7:00 p.m. with a dashboard permit. This draft does not state whether it replaces the posted policy.",
-          "score": 0.2683500051498413
+          "score": 0.26835009455680847
         },
         {
           "chunk_id": "88bf671ef906e986ea60",
@@ -289,7 +530,7 @@
           "filename": "facility_hours.txt",
           "page": null,
           "text": "FACILITY HOURS (SYNTHETIC SAMPLE)\nThe front desk is staffed Monday through Friday from 8:00 a.m. to 6:00 p.m. It is closed on weekends and public holidays.\nThe east garage is accessible to residents at all times with a resident pass. Visitor access to the east garage ends at 6:00 p.m.",
-          "score": 0.18635502457618713
+          "score": 0.1863551139831543
         },
         {
           "chunk_id": "571b29490d27bfdfc4f9",
@@ -297,7 +538,7 @@
           "filename": "emergency_procedure.pdf",
           "page": 1,
           "text": "EMERGENCY PROCEDURE (SYNTHETIC SAMPLE) Power outage During staffed hours, report a building power outage to the facilities desk using internal extension 400. The sample does not provide an after-hours emergency contact number.",
-          "score": 0.07341884076595306
+          "score": 0.07341889292001724
         }
       ],
       "bm25_top5": [
@@ -350,7 +591,7 @@
           "filename": "park_policy.txt",
           "page": null,
           "text": "PARKING POLICY (SYNTHETIC SAMPLE)\nVisitor parking Visitors may park in spaces marked VISITOR from 8:00 a.m. to 6:00 p.m. A dashboard permit is required. The permit can be collected from the front desk.\nOvernight parking Overnight parking is not permitted in the visitor lot. Residents may use the east garage overnight with a valid resident pass.\nElectric vehicle charging The two charging spaces are beside the east garage entrance. Charging is limited to four hours. The facility team checks charging equipment each Monday.",
-          "score": 0.3327627182006836
+          "score": 0.33276277780532837
         },
         {
           "chunk_id": "88bf671ef906e986ea60",
@@ -358,7 +599,7 @@
           "filename": "facility_hours.txt",
           "page": null,
           "text": "FACILITY HOURS (SYNTHETIC SAMPLE)\nThe front desk is staffed Monday through Friday from 8:00 a.m. to 6:00 p.m. It is closed on weekends and public holidays.\nThe east garage is accessible to residents at all times with a resident pass. Visitor access to the east garage ends at 6:00 p.m.",
-          "score": 0.2253894805908203
+          "score": 0.22538945078849792
         },
         {
           "chunk_id": "571b29490d27bfdfc4f9",
@@ -366,7 +607,7 @@
           "filename": "emergency_procedure.pdf",
           "page": 1,
           "text": "EMERGENCY PROCEDURE (SYNTHETIC SAMPLE) Power outage During staffed hours, report a building power outage to the facilities desk using internal extension 400. The sample does not provide an after-hours emergency contact number.",
-          "score": 0.19431236386299133
+          "score": 0.1943124532699585
         },
         {
           "chunk_id": "457676036ffc08ec0ed9",
@@ -374,7 +615,7 @@
           "filename": "park_policy_revision.txt",
           "page": null,
           "text": "PARKING POLICY REVISION (SYNTHETIC SAMPLE)\nVisitor parking An internal draft says visitors may use marked VISITOR spaces until 7:00 p.m. with a dashboard permit. This draft does not state whether it replaces the posted policy.",
-          "score": 0.15522974729537964
+          "score": 0.15522980690002441
         }
       ],
       "bm25_top5": [
@@ -427,7 +668,7 @@
           "filename": "facility_hours.txt",
           "page": null,
           "text": "FACILITY HOURS (SYNTHETIC SAMPLE)\nThe front desk is staffed Monday through Friday from 8:00 a.m. to 6:00 p.m. It is closed on weekends and public holidays.\nThe east garage is accessible to residents at all times with a resident pass. Visitor access to the east garage ends at 6:00 p.m.",
-          "score": 0.6204464435577393
+          "score": 0.620446503162384
         },
         {
           "chunk_id": "de9370d95aa0b5fab6bf",
@@ -435,7 +676,7 @@
           "filename": "park_policy.txt",
           "page": null,
           "text": "PARKING POLICY (SYNTHETIC SAMPLE)\nVisitor parking Visitors may park in spaces marked VISITOR from 8:00 a.m. to 6:00 p.m. A dashboard permit is required. The permit can be collected from the front desk.\nOvernight parking Overnight parking is not permitted in the visitor lot. Residents may use the east garage overnight with a valid resident pass.\nElectric vehicle charging The two charging spaces are beside the east garage entrance. Charging is limited to four hours. The facility team checks charging equipment each Monday.",
-          "score": 0.25749799609184265
+          "score": 0.25749802589416504
         },
         {
           "chunk_id": "457676036ffc08ec0ed9",
@@ -443,7 +684,7 @@
           "filename": "park_policy_revision.txt",
           "page": null,
           "text": "PARKING POLICY REVISION (SYNTHETIC SAMPLE)\nVisitor parking An internal draft says visitors may use marked VISITOR spaces until 7:00 p.m. with a dashboard permit. This draft does not state whether it replaces the posted policy.",
-          "score": 0.2289985716342926
+          "score": 0.22899864614009857
         },
         {
           "chunk_id": "571b29490d27bfdfc4f9",
@@ -451,7 +692,7 @@
           "filename": "emergency_procedure.pdf",
           "page": 1,
           "text": "EMERGENCY PROCEDURE (SYNTHETIC SAMPLE) Power outage During staffed hours, report a building power outage to the facilities desk using internal extension 400. The sample does not provide an after-hours emergency contact number.",
-          "score": 0.15799370408058167
+          "score": 0.15799382328987122
         }
       ],
       "bm25_top5": [
@@ -520,7 +761,7 @@
           "filename": "park_policy_revision.txt",
           "page": null,
           "text": "PARKING POLICY REVISION (SYNTHETIC SAMPLE)\nVisitor parking An internal draft says visitors may use marked VISITOR spaces until 7:00 p.m. with a dashboard permit. This draft does not state whether it replaces the posted policy.",
-          "score": 0.2692410945892334
+          "score": 0.2692411541938782
         },
         {
           "chunk_id": "571b29490d27bfdfc4f9",
@@ -528,7 +769,7 @@
           "filename": "emergency_procedure.pdf",
           "page": 1,
           "text": "EMERGENCY PROCEDURE (SYNTHETIC SAMPLE) Power outage During staffed hours, report a building power outage to the facilities desk using internal extension 400. The sample does not provide an after-hours emergency contact number.",
-          "score": 0.15234717726707458
+          "score": 0.15234728157520294
         }
       ],
       "bm25_top5": [
@@ -581,7 +822,7 @@
           "filename": "facility_hours.txt",
           "page": null,
           "text": "FACILITY HOURS (SYNTHETIC SAMPLE)\nThe front desk is staffed Monday through Friday from 8:00 a.m. to 6:00 p.m. It is closed on weekends and public holidays.\nThe east garage is accessible to residents at all times with a resident pass. Visitor access to the east garage ends at 6:00 p.m.",
-          "score": 0.6321671009063721
+          "score": 0.6321672797203064
         },
         {
           "chunk_id": "de9370d95aa0b5fab6bf",
@@ -597,7 +838,7 @@
           "filename": "park_policy_revision.txt",
           "page": null,
           "text": "PARKING POLICY REVISION (SYNTHETIC SAMPLE)\nVisitor parking An internal draft says visitors may use marked VISITOR spaces until 7:00 p.m. with a dashboard permit. This draft does not state whether it replaces the posted policy.",
-          "score": 0.4825844466686249
+          "score": 0.48258453607559204
         },
         {
           "chunk_id": "571b29490d27bfdfc4f9",
@@ -605,7 +846,7 @@
           "filename": "emergency_procedure.pdf",
           "page": 1,
           "text": "EMERGENCY PROCEDURE (SYNTHETIC SAMPLE) Power outage During staffed hours, report a building power outage to the facilities desk using internal extension 400. The sample does not provide an after-hours emergency contact number.",
-          "score": 0.19599761068820953
+          "score": 0.19599774479866028
         }
       ],
       "bm25_top5": [
@@ -659,7 +900,7 @@
           "filename": "park_policy.txt",
           "page": null,
           "text": "PARKING POLICY (SYNTHETIC SAMPLE)\nVisitor parking Visitors may park in spaces marked VISITOR from 8:00 a.m. to 6:00 p.m. A dashboard permit is required. The permit can be collected from the front desk.\nOvernight parking Overnight parking is not permitted in the visitor lot. Residents may use the east garage overnight with a valid resident pass.\nElectric vehicle charging The two charging spaces are beside the east garage entrance. Charging is limited to four hours. The facility team checks charging equipment each Monday.",
-          "score": 0.6899673938751221
+          "score": 0.6899674534797668
         },
         {
           "chunk_id": "457676036ffc08ec0ed9",
@@ -667,7 +908,7 @@
           "filename": "park_policy_revision.txt",
           "page": null,
           "text": "PARKING POLICY REVISION (SYNTHETIC SAMPLE)\nVisitor parking An internal draft says visitors may use marked VISITOR spaces until 7:00 p.m. with a dashboard permit. This draft does not state whether it replaces the posted policy.",
-          "score": 0.5785360932350159
+          "score": 0.5785361528396606
         },
         {
           "chunk_id": "88bf671ef906e986ea60",
@@ -675,7 +916,7 @@
           "filename": "facility_hours.txt",
           "page": null,
           "text": "FACILITY HOURS (SYNTHETIC SAMPLE)\nThe front desk is staffed Monday through Friday from 8:00 a.m. to 6:00 p.m. It is closed on weekends and public holidays.\nThe east garage is accessible to residents at all times with a resident pass. Visitor access to the east garage ends at 6:00 p.m.",
-          "score": 0.3796054720878601
+          "score": 0.3796055316925049
         },
         {
           "chunk_id": "571b29490d27bfdfc4f9",
@@ -683,7 +924,7 @@
           "filename": "emergency_procedure.pdf",
           "page": 1,
           "text": "EMERGENCY PROCEDURE (SYNTHETIC SAMPLE) Power outage During staffed hours, report a building power outage to the facilities desk using internal extension 400. The sample does not provide an after-hours emergency contact number.",
-          "score": 0.18085144460201263
+          "score": 0.18085160851478577
         }
       ],
       "bm25_top5": [
@@ -704,19 +945,19 @@
           "score": 0.6788062044104294
         },
         {
-          "chunk_id": "457676036ffc08ec0ed9",
-          "document_id": "e5778e70f38daebb60f9",
-          "filename": "park_policy_revision.txt",
-          "page": null,
-          "text": "PARKING POLICY REVISION (SYNTHETIC SAMPLE)\nVisitor parking An internal draft says visitors may use marked VISITOR spaces until 7:00 p.m. with a dashboard permit. This draft does not state whether it replaces the posted policy.",
-          "score": 0.0
-        },
-        {
           "chunk_id": "571b29490d27bfdfc4f9",
           "document_id": "436e17adcdb2f0f51877",
           "filename": "emergency_procedure.pdf",
           "page": 1,
           "text": "EMERGENCY PROCEDURE (SYNTHETIC SAMPLE) Power outage During staffed hours, report a building power outage to the facilities desk using internal extension 400. The sample does not provide an after-hours emergency contact number.",
+          "score": 0.0
+        },
+        {
+          "chunk_id": "457676036ffc08ec0ed9",
+          "document_id": "e5778e70f38daebb60f9",
+          "filename": "park_policy_revision.txt",
+          "page": null,
+          "text": "PARKING POLICY REVISION (SYNTHETIC SAMPLE)\nVisitor parking An internal draft says visitors may use marked VISITOR spaces until 7:00 p.m. with a dashboard permit. This draft does not state whether it replaces the posted policy.",
           "score": 0.0
         }
       ]
@@ -734,7 +975,7 @@
           "filename": "facility_hours.txt",
           "page": null,
           "text": "FACILITY HOURS (SYNTHETIC SAMPLE)\nThe front desk is staffed Monday through Friday from 8:00 a.m. to 6:00 p.m. It is closed on weekends and public holidays.\nThe east garage is accessible to residents at all times with a resident pass. Visitor access to the east garage ends at 6:00 p.m.",
-          "score": 0.17030251026153564
+          "score": 0.1703025847673416
         },
         {
           "chunk_id": "de9370d95aa0b5fab6bf",
@@ -742,7 +983,7 @@
           "filename": "park_policy.txt",
           "page": null,
           "text": "PARKING POLICY (SYNTHETIC SAMPLE)\nVisitor parking Visitors may park in spaces marked VISITOR from 8:00 a.m. to 6:00 p.m. A dashboard permit is required. The permit can be collected from the front desk.\nOvernight parking Overnight parking is not permitted in the visitor lot. Residents may use the east garage overnight with a valid resident pass.\nElectric vehicle charging The two charging spaces are beside the east garage entrance. Charging is limited to four hours. The facility team checks charging equipment each Monday.",
-          "score": 0.1277131587266922
+          "score": 0.1277131289243698
         },
         {
           "chunk_id": "457676036ffc08ec0ed9",
@@ -750,7 +991,7 @@
           "filename": "park_policy_revision.txt",
           "page": null,
           "text": "PARKING POLICY REVISION (SYNTHETIC SAMPLE)\nVisitor parking An internal draft says visitors may use marked VISITOR spaces until 7:00 p.m. with a dashboard permit. This draft does not state whether it replaces the posted policy.",
-          "score": 0.09721821546554565
+          "score": 0.09721819311380386
         },
         {
           "chunk_id": "571b29490d27bfdfc4f9",
@@ -758,7 +999,7 @@
           "filename": "emergency_procedure.pdf",
           "page": 1,
           "text": "EMERGENCY PROCEDURE (SYNTHETIC SAMPLE) Power outage During staffed hours, report a building power outage to the facilities desk using internal extension 400. The sample does not provide an after-hours emergency contact number.",
-          "score": -0.047805920243263245
+          "score": -0.04780581220984459
         }
       ],
       "bm25_top5": [
@@ -825,7 +1066,7 @@
           "filename": "facility_hours.txt",
           "page": null,
           "text": "FACILITY HOURS (SYNTHETIC SAMPLE)\nThe front desk is staffed Monday through Friday from 8:00 a.m. to 6:00 p.m. It is closed on weekends and public holidays.\nThe east garage is accessible to residents at all times with a resident pass. Visitor access to the east garage ends at 6:00 p.m.",
-          "score": 0.09573397040367126
+          "score": 0.09573402255773544
         },
         {
           "chunk_id": "571b29490d27bfdfc4f9",
@@ -833,7 +1074,7 @@
           "filename": "emergency_procedure.pdf",
           "page": 1,
           "text": "EMERGENCY PROCEDURE (SYNTHETIC SAMPLE) Power outage During staffed hours, report a building power outage to the facilities desk using internal extension 400. The sample does not provide an after-hours emergency contact number.",
-          "score": -0.015742938965559006
+          "score": -0.01574290357530117
         }
       ],
       "bm25_top5": [
@@ -887,7 +1128,7 @@
           "filename": "park_policy_revision.txt",
           "page": null,
           "text": "PARKING POLICY REVISION (SYNTHETIC SAMPLE)\nVisitor parking An internal draft says visitors may use marked VISITOR spaces until 7:00 p.m. with a dashboard permit. This draft does not state whether it replaces the posted policy.",
-          "score": 0.7145071029663086
+          "score": 0.7145070433616638
         },
         {
           "chunk_id": "de9370d95aa0b5fab6bf",
@@ -895,7 +1136,7 @@
           "filename": "park_policy.txt",
           "page": null,
           "text": "PARKING POLICY (SYNTHETIC SAMPLE)\nVisitor parking Visitors may park in spaces marked VISITOR from 8:00 a.m. to 6:00 p.m. A dashboard permit is required. The permit can be collected from the front desk.\nOvernight parking Overnight parking is not permitted in the visitor lot. Residents may use the east garage overnight with a valid resident pass.\nElectric vehicle charging The two charging spaces are beside the east garage entrance. Charging is limited to four hours. The facility team checks charging equipment each Monday.",
-          "score": 0.6434668302536011
+          "score": 0.6434669494628906
         },
         {
           "chunk_id": "88bf671ef906e986ea60",
@@ -903,7 +1144,7 @@
           "filename": "facility_hours.txt",
           "page": null,
           "text": "FACILITY HOURS (SYNTHETIC SAMPLE)\nThe front desk is staffed Monday through Friday from 8:00 a.m. to 6:00 p.m. It is closed on weekends and public holidays.\nThe east garage is accessible to residents at all times with a resident pass. Visitor access to the east garage ends at 6:00 p.m.",
-          "score": 0.19395042955875397
+          "score": 0.19395053386688232
         },
         {
           "chunk_id": "571b29490d27bfdfc4f9",
@@ -911,7 +1152,7 @@
           "filename": "emergency_procedure.pdf",
           "page": 1,
           "text": "EMERGENCY PROCEDURE (SYNTHETIC SAMPLE) Power outage During staffed hours, report a building power outage to the facilities desk using internal extension 400. The sample does not provide an after-hours emergency contact number.",
-          "score": 0.03378909453749657
+          "score": 0.033789053559303284
         }
       ],
       "bm25_top5": [
@@ -965,7 +1206,7 @@
           "filename": "park_policy_revision.txt",
           "page": null,
           "text": "PARKING POLICY REVISION (SYNTHETIC SAMPLE)\nVisitor parking An internal draft says visitors may use marked VISITOR spaces until 7:00 p.m. with a dashboard permit. This draft does not state whether it replaces the posted policy.",
-          "score": 0.661583423614502
+          "score": 0.6615834832191467
         },
         {
           "chunk_id": "de9370d95aa0b5fab6bf",
@@ -973,7 +1214,7 @@
           "filename": "park_policy.txt",
           "page": null,
           "text": "PARKING POLICY (SYNTHETIC SAMPLE)\nVisitor parking Visitors may park in spaces marked VISITOR from 8:00 a.m. to 6:00 p.m. A dashboard permit is required. The permit can be collected from the front desk.\nOvernight parking Overnight parking is not permitted in the visitor lot. Residents may use the east garage overnight with a valid resident pass.\nElectric vehicle charging The two charging spaces are beside the east garage entrance. Charging is limited to four hours. The facility team checks charging equipment each Monday.",
-          "score": 0.6572336554527283
+          "score": 0.6572335958480835
         },
         {
           "chunk_id": "88bf671ef906e986ea60",
@@ -981,7 +1222,7 @@
           "filename": "facility_hours.txt",
           "page": null,
           "text": "FACILITY HOURS (SYNTHETIC SAMPLE)\nThe front desk is staffed Monday through Friday from 8:00 a.m. to 6:00 p.m. It is closed on weekends and public holidays.\nThe east garage is accessible to residents at all times with a resident pass. Visitor access to the east garage ends at 6:00 p.m.",
-          "score": 0.44056203961372375
+          "score": 0.44056200981140137
         },
         {
           "chunk_id": "571b29490d27bfdfc4f9",
@@ -989,7 +1230,7 @@
           "filename": "emergency_procedure.pdf",
           "page": 1,
           "text": "EMERGENCY PROCEDURE (SYNTHETIC SAMPLE) Power outage During staffed hours, report a building power outage to the facilities desk using internal extension 400. The sample does not provide an after-hours emergency contact number.",
-          "score": 0.1244778037071228
+          "score": 0.12447784841060638
         }
       ],
       "bm25_top5": [
@@ -1010,19 +1251,19 @@
           "score": 2.1677406118447307
         },
         {
-          "chunk_id": "88bf671ef906e986ea60",
-          "document_id": "87584181127e0a28b735",
-          "filename": "facility_hours.txt",
-          "page": null,
-          "text": "FACILITY HOURS (SYNTHETIC SAMPLE)\nThe front desk is staffed Monday through Friday from 8:00 a.m. to 6:00 p.m. It is closed on weekends and public holidays.\nThe east garage is accessible to residents at all times with a resident pass. Visitor access to the east garage ends at 6:00 p.m.",
-          "score": 0.0
-        },
-        {
           "chunk_id": "571b29490d27bfdfc4f9",
           "document_id": "436e17adcdb2f0f51877",
           "filename": "emergency_procedure.pdf",
           "page": 1,
           "text": "EMERGENCY PROCEDURE (SYNTHETIC SAMPLE) Power outage During staffed hours, report a building power outage to the facilities desk using internal extension 400. The sample does not provide an after-hours emergency contact number.",
+          "score": 0.0
+        },
+        {
+          "chunk_id": "88bf671ef906e986ea60",
+          "document_id": "87584181127e0a28b735",
+          "filename": "facility_hours.txt",
+          "page": null,
+          "text": "FACILITY HOURS (SYNTHETIC SAMPLE)\nThe front desk is staffed Monday through Friday from 8:00 a.m. to 6:00 p.m. It is closed on weekends and public holidays.\nThe east garage is accessible to residents at all times with a resident pass. Visitor access to the east garage ends at 6:00 p.m.",
           "score": 0.0
         }
       ]
@@ -1042,7 +1283,7 @@
           "filename": "emergency_procedure.pdf",
           "page": 1,
           "text": "EMERGENCY PROCEDURE (SYNTHETIC SAMPLE) Power outage During staffed hours, report a building power outage to the facilities desk using internal extension 400. The sample does not provide an after-hours emergency contact number.",
-          "score": 0.6029177904129028
+          "score": 0.6029179096221924
         },
         {
           "chunk_id": "88bf671ef906e986ea60",
@@ -1050,7 +1291,7 @@
           "filename": "facility_hours.txt",
           "page": null,
           "text": "FACILITY HOURS (SYNTHETIC SAMPLE)\nThe front desk is staffed Monday through Friday from 8:00 a.m. to 6:00 p.m. It is closed on weekends and public holidays.\nThe east garage is accessible to residents at all times with a resident pass. Visitor access to the east garage ends at 6:00 p.m.",
-          "score": 0.1413065642118454
+          "score": 0.14130660891532898
         },
         {
           "chunk_id": "de9370d95aa0b5fab6bf",
@@ -1058,7 +1299,7 @@
           "filename": "park_policy.txt",
           "page": null,
           "text": "PARKING POLICY (SYNTHETIC SAMPLE)\nVisitor parking Visitors may park in spaces marked VISITOR from 8:00 a.m. to 6:00 p.m. A dashboard permit is required. The permit can be collected from the front desk.\nOvernight parking Overnight parking is not permitted in the visitor lot. Residents may use the east garage overnight with a valid resident pass.\nElectric vehicle charging The two charging spaces are beside the east garage entrance. Charging is limited to four hours. The facility team checks charging equipment each Monday.",
-          "score": 0.12172698974609375
+          "score": 0.1217271089553833
         },
         {
           "chunk_id": "457676036ffc08ec0ed9",
@@ -1066,7 +1307,7 @@
           "filename": "park_policy_revision.txt",
           "page": null,
           "text": "PARKING POLICY REVISION (SYNTHETIC SAMPLE)\nVisitor parking An internal draft says visitors may use marked VISITOR spaces until 7:00 p.m. with a dashboard permit. This draft does not state whether it replaces the posted policy.",
-          "score": 0.022841256111860275
+          "score": 0.02284131944179535
         }
       ],
       "bm25_top5": [
@@ -1117,7 +1358,7 @@
           "filename": "emergency_procedure.pdf",
           "page": 1,
           "text": "EMERGENCY PROCEDURE (SYNTHETIC SAMPLE) Power outage During staffed hours, report a building power outage to the facilities desk using internal extension 400. The sample does not provide an after-hours emergency contact number.",
-          "score": 0.48735612630844116
+          "score": 0.48735618591308594
         },
         {
           "chunk_id": "88bf671ef906e986ea60",
@@ -1125,7 +1366,7 @@
           "filename": "facility_hours.txt",
           "page": null,
           "text": "FACILITY HOURS (SYNTHETIC SAMPLE)\nThe front desk is staffed Monday through Friday from 8:00 a.m. to 6:00 p.m. It is closed on weekends and public holidays.\nThe east garage is accessible to residents at all times with a resident pass. Visitor access to the east garage ends at 6:00 p.m.",
-          "score": 0.3360009789466858
+          "score": 0.33600109815597534
         },
         {
           "chunk_id": "de9370d95aa0b5fab6bf",
@@ -1133,7 +1374,7 @@
           "filename": "park_policy.txt",
           "page": null,
           "text": "PARKING POLICY (SYNTHETIC SAMPLE)\nVisitor parking Visitors may park in spaces marked VISITOR from 8:00 a.m. to 6:00 p.m. A dashboard permit is required. The permit can be collected from the front desk.\nOvernight parking Overnight parking is not permitted in the visitor lot. Residents may use the east garage overnight with a valid resident pass.\nElectric vehicle charging The two charging spaces are beside the east garage entrance. Charging is limited to four hours. The facility team checks charging equipment each Monday.",
-          "score": 0.22614198923110962
+          "score": 0.22614216804504395
         },
         {
           "chunk_id": "457676036ffc08ec0ed9",
@@ -1141,7 +1382,7 @@
           "filename": "park_policy_revision.txt",
           "page": null,
           "text": "PARKING POLICY REVISION (SYNTHETIC SAMPLE)\nVisitor parking An internal draft says visitors may use marked VISITOR spaces until 7:00 p.m. with a dashboard permit. This draft does not state whether it replaces the posted policy.",
-          "score": 0.21662266552448273
+          "score": 0.21662285923957825
         }
       ],
       "bm25_top5": [
