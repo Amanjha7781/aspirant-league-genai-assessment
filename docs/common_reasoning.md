@@ -1,6 +1,6 @@
 # Think Like a GenAI Engineer
 
-This is an analysis document, not a third prototype. Current observations are separated from proposals. The language model is not configured, so model-generation reliability has not yet been observed in either app.
+This is an analysis document, not a third prototype. Current observations are separated from proposals. Update 22 Nov 2026: a real model (gemini-3.5-flash-lite, free Google AI Studio key) was configured and both model-backed evaluations were run, so the observations below now include real model behavior recorded in `evaluation/rag/raw_results.json`, `evaluation/rag/answer_support_review.json`, and `evaluation/extraction/raw_results.json`.
 
 ## 1. Confidently incorrect answers
 
@@ -36,7 +36,7 @@ This is an analysis document, not a third prototype. Current observations are se
 
 **Plausible causes:** network outage, rate limits, bad credentials, overloaded provider, or request/payload size.
 
-**Investigate:** record request duration, status class, timeout/error category, provider/model name, and a correlation ID. Never log headers containing secrets or document text. Current code uses a 1-60 second bounded timeout, returns 503 when no model is configured or the request fails, and does not retry indefinitely. A live external failure/latency test is NOT RUN because there is no authorized endpoint configured.
+**Investigate:** record request duration, status class, timeout/error category, provider/model name, and a correlation ID. Never log headers containing secrets or document text. Current code uses a 1-60 second bounded timeout, returns 503 when no model is configured or the request fails, and does not retry indefinitely. Update 22 Nov 2026: live transient provider errors were observed during the real evaluation runs (5 retried calls across the extraction run); bounded retries with backoff (3 attempts, 45 s) cleared them and no call was silently dropped. Formal latency percentiles were not measured.
 
 **Fixes:** bounded retries with backoff for transient failures, concurrency limits, circuit breaker, smaller contexts, local fallback, or asynchronous jobs (application/system work). Do not retry invalid requests or schema errors endlessly.
 
