@@ -1,0 +1,17 @@
+[
+  {"id":"R01","query":"What hours may visitors use visitor parking?","expected_sources":["park_policy.txt","park_policy_revision.txt"],"expected_abstention":false,"expected_conflict":true},
+  {"id":"R02","query":"What does a visitor need to display?","expected_sources":["park_policy.txt","park_policy_revision.txt"],"expected_abstention":false},
+  {"id":"R03","query":"Where is the EV charging located?","expected_sources":["park_policy.txt"],"expected_abstention":false},
+  {"id":"R04","query":"How long may a vehicle charge?","expected_sources":["park_policy.txt"],"expected_abstention":false},
+  {"id":"R05","query":"Who checks the charging equipment and when?","expected_sources":["park_policy.txt"],"expected_abstention":false},
+  {"id":"R06","query":"When is the front desk open?","expected_sources":["facility_hours.txt"],"expected_abstention":false},
+  {"id":"R07","query":"Is the desk open Sunday?","expected_sources":["facility_hours.txt"],"expected_abstention":false},
+  {"id":"R08","query":"When is visitor access to the east garage closed?","expected_sources":["facility_hours.txt"],"expected_abstention":false},
+  {"id":"R09","query":"Can residents park overnight?","expected_sources":["park_policy.txt","facility_hours.txt"],"expected_abstention":false},
+  {"id":"R10","query":"What color is the garage door?","expected_sources":[],"expected_abstention":true},
+  {"id":"R11","query":"What is the visitor permit fee?","expected_sources":[],"expected_abstention":true},
+  {"id":"R12","query":"Does visitor parking require a permit?","expected_sources":["park_policy.txt","park_policy_revision.txt"],"expected_abstention":false},
+  {"id":"R13","query":"What time can visitors park until?","expected_sources":["park_policy.txt","park_policy_revision.txt"],"expected_abstention":false,"expected_conflict":true},
+  {"id":"R14","query":"What internal extension should be called for a power outage?","expected_sources":["emergency_procedure.pdf"],"expected_abstention":false},
+  {"id":"R15","query":"What is the after-hours emergency contact number?","expected_sources":[],"expected_abstention":true}
+]

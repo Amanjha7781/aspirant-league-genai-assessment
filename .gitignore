@@ -1,0 +1,16 @@
+.venv/
+.verify-venv/
+.env
+__pycache__/
+.pytest_cache/
+*.py[cod]
+*.sqlite3
+*.faiss
+*.jsonl.tmp
+rag_app/data/
+extraction_app/data/
+evaluation/rag/.local_index/
+work/
+outputs/demo_recordings/
+outputs/aspirant_league_projects.zip
+

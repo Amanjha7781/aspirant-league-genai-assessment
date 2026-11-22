@@ -1,0 +1,17 @@
+{
+  "status": "complete",
+  "fields": {
+    "invoice_id": {"status": "found", "raw_value": "NS-1042", "normalized_value": "NS-1042", "evidence": "Invoice Number: NS-1042", "alternatives": []},
+    "invoice_date": {"status": "found", "raw_value": "2026-01-14", "normalized_value": "2026-01-14", "evidence": "Invoice Date: 2026-01-14", "alternatives": []},
+    "vendor": {"status": "found", "raw_value": "Northstar Labs", "normalized_value": "Northstar Labs", "evidence": "Northstar Labs", "alternatives": []},
+    "currency": {"status": "found", "raw_value": "USD", "normalized_value": "USD", "evidence": "Currency: USD", "alternatives": []},
+    "subtotal": {"status": "found", "raw_value": "240.00", "normalized_value": "240.00", "evidence": "Subtotal: 240.00", "alternatives": []},
+    "tax": {"status": "found", "raw_value": "19.20", "normalized_value": "19.20", "evidence": "Tax: 19.20", "alternatives": []},
+    "total": {"status": "found", "raw_value": "259.20", "normalized_value": "259.20", "evidence": "Total: 259.20", "alternatives": []}
+  },
+  "validation_checks": [
+    {"name": "subtotal_plus_tax_equals_total", "status": "passed", "detail": "Calculated 259.20; extracted total 259.20."}
+  ],
+  "warnings": [],
+  "source_filename": "invoice_01.pdf"
+}
