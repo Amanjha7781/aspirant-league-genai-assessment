@@ -13,7 +13,7 @@ from rag_app.chunking import chunk_document
 from rag_app.generation import grounded_answer
 from rag_app.index import LocalVectorIndex, bm25_search
 from rag_app.loaders import DocumentInputError, parse_document
-from shared.llm import ModelOutputInvalid, ModelUnavailable
+from shared.llm import LLMClient, ModelOutputInvalid, ModelUnavailable
 
 
 def test_txt_upload_parse_and_stable_chunk_ids():
@@ -97,6 +97,9 @@ def test_rag_api_upload_and_search(tmp_path: Path, monkeypatch):
     assert duplicate.status_code == 200 and duplicate.json()["duplicates"]
     pdf_search = client.get("/search", params={"q": "What extension is used for a power outage?"})
     assert pdf_search.status_code == 200 and pdf_search.json()[0]["citation"]["page"] == 1
+    monkeypatch.delenv("LLM_BASE_URL", raising=False)
+    monkeypatch.delenv("LLM_MODEL", raising=False)
+    monkeypatch.setattr(api, "llm", LLMClient())
     unavailable = client.post("/ask", json={"question": "What extension is used for a power outage?"})
     assert unavailable.status_code == 503
 
