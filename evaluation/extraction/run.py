@@ -7,7 +7,7 @@ from pathlib import Path
 from extraction_app.extractor import extract_invoice
 from extraction_app.pdf import extract_pdf_text
 from extraction_app.validation import validate_candidate
-from shared.llm import LLMClient, ModelUnavailable
+from shared.llm import LLMClient, ModelOutputInvalid, ModelUnavailable
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -30,11 +30,30 @@ async def evaluate() -> dict:
     present_denominator = sum(label["expected"][name]["status"] == "found" for label in labels for name in FIELDS)
     error_count = 0
     for label in labels:
+        await asyncio.sleep(8)  # pace requests under the provider's free-tier rate limit
         content = (SAMPLE_DIR / label["file"]).read_bytes()
         text, _pages = extract_pdf_text(content)
-        row = {"file": label["file"], "fields": {}}
-        try:
-            candidate = await extract_invoice(client, text)
+        row = {"file": label["file"], "fields": {}, "retries": 0}
+        candidate = None
+        last_error = None
+        for _attempt in range(3):
+            try:
+                candidate = await extract_invoice(client, text)
+                break
+            except (ModelUnavailable, ModelOutputInvalid) as exc:
+                # Bounded retries with backoff for transient provider errors or one-off
+                # malformed model output; the app itself deliberately surfaces an error
+                # without retrying. Retries are counted and reported per document.
+                row["retries"] += 1
+                last_error = str(exc)
+                if _attempt < 2:
+                    await asyncio.sleep(45)
+        if candidate is None:
+            row["error"] = f"failed after {row['retries']} bounded retries: {last_error}"
+            error_count += 1
+            for name in FIELDS:
+                row["fields"][name] = {"status": "missing", "normalized_value": None, "expected": label["expected"][name], "exact_match": False}
+        else:
             schema_valid += 1
             candidate, _checks, warnings = validate_candidate(candidate, text)
             row["warnings"] = warnings
@@ -44,14 +63,8 @@ async def evaluate() -> dict:
                 exact = actual.status == expected["status"] and actual.normalized_value == expected["normalized_value"]
                 exact_correct += int(exact)
                 if expected["status"] == "found":
-                    present_denominator += 1
                     present_correct += int(actual.status == "found" and actual.normalized_value == expected["normalized_value"])
                 row["fields"][name] = {"status": actual.status, "normalized_value": actual.normalized_value, "expected": expected, "exact_match": exact}
-        except ModelUnavailable as exc:
-            row["error"] = str(exc)
-            error_count += 1
-            for name in FIELDS:
-                row["fields"][name] = {"status": "missing", "normalized_value": None, "expected": label["expected"][name], "exact_match": False}
         output["per_document"].append(row)
     output["status"] = "COMPLETE" if error_count == 0 else "PARTIAL"
     output["schema_validity_rate"] = round(schema_valid / len(labels), 4)
