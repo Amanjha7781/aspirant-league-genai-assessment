@@ -103,9 +103,9 @@ def test_unexpected_model_output_is_classified_as_invalid():
 
 def test_extract_api_openapi_and_missing_model_behavior(monkeypatch):
     from extraction_app import api
-    monkeypatch.setattr(api, "llm", LLMClient())
     monkeypatch.delenv("LLM_BASE_URL", raising=False)
     monkeypatch.delenv("LLM_MODEL", raising=False)
+    monkeypatch.setattr(api, "llm", LLMClient())
     client = TestClient(api.app)
     assert "/extract" in client.get("/openapi.json").json()["paths"]
     unsupported = client.post("/extract", files={"file": ("file.txt", b"text", "text/plain")})
